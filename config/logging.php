@@ -129,7 +129,7 @@ return [
 
         'service_api' => [
             'driver' => 'single',
-            'path' => public_path('ServiceApi/servie_api.log'),
+            'path' => public_path('ServiceApi/service_api.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],

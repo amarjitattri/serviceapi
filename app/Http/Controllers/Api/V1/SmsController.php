@@ -9,27 +9,21 @@ use Illuminate\Support\Facades\Log;
 class SmsController extends Controller
 {
     public function NotifySmsReceptionResponse(Request $request){
-        // dump($request->all());
-        // $referance = $request->
-        Log::channel('service_api')->info('', [$request->all()]);
+        $referance = $request->SessionId.'_'.date("Y-m-d H:i:s");
+        Log::channel('service_api')->info($referance, [$request->all()]);
 
-        $reponse = [
-                'NotifySmsDeliveryReportResponse' => [
-                    'resultCode' => "OK"
-                ]
-        ];
-        
-        return $reponse;
-    }
-    public function NotifySmsReception(Request $request){
-        // dump($request->all());
-        // $referance = $request->
-        Log::channel('service_api')->info('', [$request->all()]);
-
-        $reponse = [
+        return [
             'resultCode' => "OK"
         ];
+    }
+    public function NotifySmsReception(Request $request){
 
-        return $reponse;
+        $referance = $request->SessionId.'_'.date("Y-m-d H:i:s");
+
+        Log::channel('service_api')->info($referance, [$request->all()]);
+
+        return [
+            'resultCode' => "OK"
+        ];
     }
 }
