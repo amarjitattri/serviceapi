@@ -31,6 +31,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('SubscriptionSuspended', [SubscriptionController::class, 'SubscriptionSuspended']);
     Route::post('SubscriptionToBeRenewed', [SubscriptionController::class, 'SubscriptionToBeRenewed']);
     Route::post('SubscriptionTrialToBeEnded', [SubscriptionController::class, 'SubscriptionTrialToBeEnded']);
+    Route::post('SubscriptionToBeDeactivated', [SubscriptionController::class, 'SubscriptionToBeDeactivated']);
     // Route::apiResource('invoices', InvoiceController::class);
 });
 // Route::get('NotifySmsReceptionResponse', [SmsController::class, 'NotifySmsReceptionResponse']);

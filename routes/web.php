@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\DocumentationController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,20 @@ use Illuminate\Support\Facades\Log;
 */
 
 Route::get('/', function () {
-    Log::channel('service_api')->info('Something happened!');
-    return view('welcome');
+    return view('documentation.index');
 });
 
+Route::get('/subscription', [DocumentationController::class, 'subscription']);
+Route::get('/subscriptionCreated', [DocumentationController::class, 'subscriptionCreated']);
+Route::get('/subscriptionDeactivated', [DocumentationController::class, 'subscriptionDeactivated']);
+Route::get('/subscriptionRenewFailed', [DocumentationController::class, 'subscriptionRenewFailed']);
+Route::get('/subscriptionRenewed', [DocumentationController::class, 'subscriptionRenewed']);
+Route::get('/subscriptionSuspended', [DocumentationController::class, 'subscriptionSuspended']);
+Route::get('/subscriptionToBeDeactivated', [DocumentationController::class, 'subscriptionToBeDeactivated']);
+Route::get('/subscriptionToBeRenewed', [DocumentationController::class, 'subscriptionToBeRenewed']);
+Route::get('/subscriptionTrialToBeEnded', [DocumentationController::class, 'subscriptionTrialToBeEnded']);
+Route::get('/subscriptionResumed', [DocumentationController::class, 'subscriptionResumed']);
+
+Route::get('/sms', [DocumentationController::class, 'sms']);
+Route::get('/notifySmsDeliveryReport', [DocumentationController::class, 'notifySmsDeliveryReport']);
+Route::get('/notifySmsReception', [DocumentationController::class, 'notifySmsReception']);
