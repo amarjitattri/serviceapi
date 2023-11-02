@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleXMLElement;
+use Illuminate\Http\Response;
 
 class DocumentationController extends Controller
 {
@@ -14,8 +16,15 @@ class DocumentationController extends Controller
         $this->url = url('/api/v1');
     }
 
-    public function subscription(){
-
+    public function subscription(Request $request){
+        
+    /*
+    echo '
+    cevap burada
+';
+           exit(); echo ($xml);
+   */
+    
         return view('documentation.subscription.index', ['header_name' => 'Subscription', 'header_url' => '/']);
     }
     public function subscriptionCreated(){
@@ -47,7 +56,11 @@ class DocumentationController extends Controller
     public function subscriptionResumed(){
         return view('documentation.subscription.subscriptionResumed', ['header_name' => 'Subscription', 'header_url' => '/subscription', 'request_url' => $this->url]);
     }
-    public function sms(){
+    public function sms(Request $request){
+
+
+        return $request->getContent();
+
         return view('documentation.sms.index', ['header_name' => 'Sms', 'header_url' => '/', 'request_url' => $this->url]);
     }
     public function notifySmsDeliveryReport(){

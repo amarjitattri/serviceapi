@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://www.avea.com.tr/pims-partner/schema/smsNotification"
+                  targetNamespace="http://www.avea.com.tr/pims-partner/schema/smsNotification">
+    <wsdl:types>
+        <xs:schema xmlns:common="http://www.avea.com.tr/pims/schema-common" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                   targetNamespace="http://www.avea.com.tr/pims/schema-common">
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Msisdn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Asid" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NamedParam">
+                <xs:sequence>
+                    <xs:element name="Key" type="xs:string"/>
+                    <xs:element name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Attachment">
+                <xs:sequence>
+                    <xs:element name="content" type="xs:base64Binary"/>
+                    <xs:element name="contentLocation" type="xs:string"/>
+                    <xs:element name="contentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="contentId" type="xs:string"/>
+                    <xs:element name="contentTransferEncodingType" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>base64</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ChargingStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="INIT"/>
+                    <xs:enumeration value="COMMITED"/>
+                    <xs:enumeration value="FAILED"/>
+                    <xs:enumeration value="PARTIALLY_COMMITED"/>
+                    <xs:enumeration value="RESERVED"/>
+                    <xs:enumeration value="PARTIALLY_RESERVED"/>
+                    <xs:enumeration value="RELEASED"/>
+                    <xs:enumeration value="TIMED_OUT"/>
+                    <xs:enumeration value="TO_BE_RETRIED"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="SubscriptionOfferProfile">
+                <xs:sequence>
+                    <xs:element name="ServiceProfileAttributeKey" type="xs:string"/>
+                    <xs:element minOccurs="0" name="AttrValue" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:common="http://www.avea.com.tr/pims/schema-common"
+                   xmlns:pims="http://www.avea.com.tr/pims-partner/schema/smsNotification"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified"
+                   elementFormDefault="unqualified"
+                   targetNamespace="http://www.avea.com.tr/pims-partner/schema/smsNotification">
+            <xs:import namespace="http://www.avea.com.tr/pims/schema-common"/>
+            <xs:element name="NotifySmsReceptionRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="SessionId" type="xs:string"/>
+                        <xs:element minOccurs="0" name="SmsServiceActivationNumber" type="xs:string"/>
+                        <xs:element minOccurs="0" name="SenderAddress" type="common:Address"/>
+                        <xs:element minOccurs="0" name="Message" type="xs:string"/>
+                        <xs:element minOccurs="0" name="MessageKey" type="xs:string"/>
+                        <xs:element minOccurs="0" name="PartTotal" type="xs:int"/>
+                        <xs:element minOccurs="0" name="PartNo" type="xs:int"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="NotifySmsReceptionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="resultCode" type="pims:SmsNotificationServiceResultCode"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="NotifySmsDeliveryReportRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="SessionId" type="xs:string"/>
+                        <xs:element minOccurs="0" name="MessageKey" type="xs:string"/>
+                        <xs:element minOccurs="0" name="DeliveryInformation" type="pims:SmsDeliveryInformation"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="NotifySmsDeliveryReportResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="resultCode" type="pims:SmsNotificationServiceResultCode"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SmsSentRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="NotificationKey" type="xs:string"/>
+                        <xs:element name="TxKey" type="xs:string"/>
+                        <xs:element name="MessageKeys" type="pims:MessageKeys"/>
+                        <xs:element name="SendingTime" type="xs:dateTime"/>
+                        <xs:element name="OfferKey" type="xs:string"/>
+                        <xs:element name="MessageText" type="xs:string"/>
+                        <xs:element name="SenderAddress" type="xs:string"/>
+                        <xs:element name="Address" type="common:Address"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SmsSentResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="resultCode" type="pims:SmsNotificationServiceResultCode"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="SmsDeliveryInformation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Address" type="common:Address"/>
+                    <xs:element minOccurs="0" name="SmsDeliveryStatus" type="pims:SmsDeliveryStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="SmsDeliveryStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Delivered"/>
+                    <xs:enumeration value="DeliveryUncertain"/>
+                    <xs:enumeration value="DeliveryImpossible"/>
+                    <xs:enumeration value="MessageWaiting"/>
+										<xs:enumeration value="DeliveryFailed"/>			
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="SmsNotificationServiceResultCode">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="OK"/>
+                    <xs:enumeration value="FAILED"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="MessageKeys">
+                <xs:sequence>
+                    <xs:element name="MessageKey" type="xs:string" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="NotifySmsDeliveryReportResponse">
+        <wsdl:part element="tns:NotifySmsDeliveryReportResponse" name="NotifySmsDeliveryReportResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NotifySmsDeliveryReportRequest">
+        <wsdl:part element="tns:NotifySmsDeliveryReportRequest" name="NotifySmsDeliveryReportRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NotifySmsReceptionRequest">
+        <wsdl:part element="tns:NotifySmsReceptionRequest" name="NotifySmsReceptionRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NotifySmsReceptionResponse">
+        <wsdl:part element="tns:NotifySmsReceptionResponse" name="NotifySmsReceptionResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SmsSentRequest">
+        <wsdl:part element="tns:SmsSentRequest" name="SmsSentRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SmsSentResponse">
+        <wsdl:part element="tns:SmsSentResponse" name="SmsSentResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Pims">
+        <wsdl:operation name="NotifySmsDeliveryReport">
+            <wsdl:input message="tns:NotifySmsDeliveryReportRequest" name="NotifySmsDeliveryReportRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:NotifySmsDeliveryReportResponse" name="NotifySmsDeliveryReportResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="NotifySmsReception">
+            <wsdl:input message="tns:NotifySmsReceptionRequest" name="NotifySmsReceptionRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:NotifySmsReceptionResponse" name="NotifySmsReceptionResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SmsSent">
+            <wsdl:input message="tns:SmsSentRequest" name="SmsSentRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:SmsSentResponse" name="SmsSentResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PimsSoap11" type="tns:Pims">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="NotifySmsDeliveryReport">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="NotifySmsDeliveryReportRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="NotifySmsDeliveryReportResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="NotifySmsReception">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="NotifySmsReceptionRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="NotifySmsReceptionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PimsService">
+        <wsdl:port binding="tns:PimsSoap11" name="PimsSoap11">
+            <soap:address location="http://10.17.26.64:7003/wsps/services"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

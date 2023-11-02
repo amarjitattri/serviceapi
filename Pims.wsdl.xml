@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch0="http://www.avea.com.tr/pims/schema-common" xmlns:sch1="http://www.avea.com.tr/pims/schema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.avea.com.tr/pims/schema" targetNamespace="http://www.avea.com.tr/pims/schema">
+  <wsdl:types>
+    <xs:schema xmlns:common="http://www.avea.com.tr/pims/schema-common" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.avea.com.tr/pims/schema-common"><xs:complexType name="Address"><xs:sequence><xs:element minOccurs="0" name="Msisdn" type="xs:string"/><xs:element minOccurs="0" name="Asid" type="xs:string"/></xs:sequence></xs:complexType><xs:complexType name="NamedParam"><xs:sequence><xs:element name="Key" type="xs:string"/><xs:element name="Value" type="xs:string"/></xs:sequence></xs:complexType><xs:complexType name="Attachment"><xs:sequence><xs:element name="content" type="xs:base64Binary"/><xs:element name="contentLocation" type="xs:string"/><xs:element name="contentType" type="xs:string"/><xs:element minOccurs="0" name="contentId" type="xs:string"/><xs:element name="contentTransferEncodingType" type="xs:string"><xs:annotation><xs:documentation>base64</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType><xs:simpleType name="ChargingStatus"><xs:restriction base="xs:string"><xs:enumeration value="INIT"/><xs:enumeration value="COMMITED"/><xs:enumeration value="FAILED"/><xs:enumeration value="PARTIALLY_COMMITED"/><xs:enumeration value="RESERVED"/><xs:enumeration value="PARTIALLY_RESERVED"/><xs:enumeration value="RELEASED"/><xs:enumeration value="TIMED_OUT"/><xs:enumeration value="TO_BE_RETRIED"/></xs:restriction></xs:simpleType><xs:simpleType name="PartnerStatus"><xs:restriction base="xs:string"><xs:enumeration value="ACTIVE"/><xs:enumeration value="SUSPEND"/><xs:enumeration value="DEACTIVE"/></xs:restriction></xs:simpleType><xs:simpleType name="ServiceAppStatus"><xs:restriction base="xs:string"><xs:enumeration value="ACTIVE"/><xs:enumeration value="SUSPEND"/><xs:enumeration value="DEACTIVE"/></xs:restriction></xs:simpleType><xs:simpleType name="ProductStatus"><xs:restriction base="xs:string"><xs:enumeration value="ACTIVE"/><xs:enumeration value="SUSPEND"/><xs:enumeration value="DEACTIVE"/></xs:restriction></xs:simpleType><xs:simpleType name="OfferStatus"><xs:restriction base="xs:string"><xs:enumeration value="ACTIVE"/><xs:enumeration value="SUSPEND"/><xs:enumeration value="DEACTIVE"/></xs:restriction></xs:simpleType><xs:simpleType name="TimeUnit"><xs:restriction base="xs:string"><xs:enumeration value="MIN"/><xs:enumeration value="HOUR"/><xs:enumeration value="DAY"/><xs:enumeration value="WEEK"/><xs:enumeration value="MONTH"/><xs:enumeration value="YEAR"/></xs:restriction></xs:simpleType><xs:complexType name="SubscriptionOfferProfile"><xs:sequence><xs:element name="ServiceProfileAttributeKey" type="xs:string"/><xs:element minOccurs="0" name="AttrValue" type="xs:string"/></xs:sequence></xs:complexType></xs:schema>
+    <xs:schema xmlns:common="http://www.avea.com.tr/pims/schema-common" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pims="http://www.avea.com.tr/pims/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" jaxb:version="2.1" targetNamespace="http://www.avea.com.tr/pims/schema"><xs:annotation><xs:appinfo>
+	        <jaxb:globalBindings>
+	            <jaxb:javaType name="java.util.Calendar" parseMethod="javax.xml.bind.DatatypeConverter.parseDateTime" printMethod="javax.xml.bind.DatatypeConverter.printDateTime" xmlType="xs:dateTime"/>
+	        </jaxb:globalBindings>
+	    </xs:appinfo></xs:annotation><xs:import namespace="http://www.avea.com.tr/pims/schema-common"/><xs:element name="MapIvtRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="Keyword" type="xs:string"/><xs:element name="Msisdn" type="xs:string"/><xs:element minOccurs="0" name="Description" type="xs:string"/><xs:element minOccurs="0" name="Profile" type="pims:MapProfile"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="MapIvtResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="TransactionKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="MigrateSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="OfferKey" type="xs:string"/><xs:element maxOccurs="unbounded" name="SubscriberToBeMigrated" type="pims:SubscriberToBeMigrated"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="MigrateSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element maxOccurs="unbounded" name="SubscriberMigrationResult" type="pims:SubscriberMigrationResult"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:complexType name="SubscriberToBeMigrated"><xs:sequence><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"><xs:annotation><xs:documentation>key-value pairs abone olunan servisin attributeları</xs:documentation></xs:annotation></xs:element><xs:element name="Address" type="common:Address"><xs:annotation><xs:documentation>Msisdn yada asid den bir tanesi dolu olma zorunda</xs:documentation></xs:annotation></xs:element><xs:element name="OriginalCreateDate" type="xs:dateTime"/><xs:element name="NextRenewalDate" type="xs:dateTime"/><xs:element minOccurs="0" name="NextIntervalCount" type="xs:int"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType><xs:complexType name="SubscriberMigrationResult"><xs:sequence><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="SubscriptionKey" type="xs:string"><xs:annotation><xs:documentation>Abonelik yaratılmış ise verilen id</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:sequence></xs:complexType><xs:element name="UpgradeSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"><xs:annotation><xs:documentation>key-value pairs abone olunan servisin attributeları</xs:documentation></xs:annotation></xs:element><xs:element name="CurrentSubscriptionKey" type="xs:string"/><xs:element name="NewOfferKey" type="xs:string"/><xs:element name="ImmediateUpgrade" type="xs:boolean"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="UpgradeSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="NewSubscriptionKey" type="xs:string"><xs:annotation><xs:documentation>Abonelik yaratılmış ise verilen id</xs:documentation></xs:annotation></xs:element><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="CreateSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"><xs:annotation><xs:documentation>key-value pairs abone olunan servisin attributeları</xs:documentation></xs:annotation></xs:element><xs:element name="Address" type="common:Address"><xs:annotation><xs:documentation>Msisdn yada asid den bir tanesi dolu olma zorunda</xs:documentation></xs:annotation></xs:element><xs:element name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="CreateSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="SubscriptionKey" type="xs:string"><xs:annotation><xs:documentation>Abonelik yaratılmış ise verilen id</xs:documentation></xs:annotation></xs:element><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="UpdateSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"><xs:annotation><xs:documentation>key-value pairs abone olunan servisin attributeları</xs:documentation></xs:annotation></xs:element><xs:element name="SubscriptionKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="UpdateSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="SubscriptionKey" type="xs:string"><xs:annotation><xs:documentation>Abonelik yaratılmış ise verilen id</xs:documentation></xs:annotation></xs:element><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SuspendSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="SubscriptionKey" type="xs:string"/><xs:element minOccurs="0" name="ReasonDescription" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="SuspendSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SuspendAllSubscriptionsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="ReasonDescription" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="SuspendAllSubscriptionsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="ResumeSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="SubscriptionKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="ResumeSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="ResumeAllSubscriptionsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="ReasonDescription" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="ResumeAllSubscriptionsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="StopSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="SubscriptionKey" type="xs:string"/><xs:element minOccurs="0" name="ReasonDescription" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element name="ImmediateServiceStop" type="xs:boolean"><xs:annotation><xs:documentation>Hemen abonelik bitirilsin mi yoksa donem sonuna kadar beklensin mi</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="StopSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="StopAllSubscriptionsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="ReasonDescription" type="xs:string"/><xs:element name="ImmediateServiceStop" type="xs:boolean"><xs:annotation><xs:documentation>Hemen abonelik bitirilsin mi yoksa donem sonuna kadar beklensin mi</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="StopAllSubscriptionsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="QueryAllSubscriptionsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="Address" type="common:Address"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="QueryAllSubscriptionsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" ref="pims:SubscriptionOffer"/></xs:sequence></xs:complexType></xs:element><xs:element name="QuerySubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="Address" type="common:Address"/><xs:element name="ProductKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="QuerySubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" ref="pims:SubscriptionOffer"/></xs:sequence></xs:complexType></xs:element><xs:element name="SendSmsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="SmsType" type="xs:string"><xs:annotation><xs:documentation>SMS/LOGO/RINGTONE</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="SmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="Message" type="xs:string"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendSmsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendBulkSmsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="SmsType" type="xs:string"><xs:annotation><xs:documentation>SMS/LOGO/RINGTONE</xs:documentation></xs:annotation></xs:element><xs:element name="Subscribers" type="pims:Subscribers"/><xs:element name="SmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="Message" type="xs:string"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendBulkSmsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendSmsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="SmsType" type="xs:string"><xs:annotation><xs:documentation>SMS/LOGO/RINGTONE</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="SmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="Message" type="xs:string"/><xs:element name="Charging" type="pims:DCCharging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendSmsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendWapPushRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="Url" type="xs:string"/><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="SmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="Message" type="xs:string"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendWapPushResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendWapPushRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="Url" type="xs:string"/><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="SmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="Message" type="xs:string"/><xs:element name="Charging" type="pims:DCCharging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendWapPushResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendMmsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="common:Attachment"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="MmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="MessagePriority" type="xs:string"><xs:annotation><xs:documentation>DEFAULT,LOW,NORMAL,HIGH</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="Message" type="xs:string"/><xs:element name="Subject" type="xs:string"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="SendMmsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendMmsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="common:Attachment"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="MmsHeader" type="xs:string"><xs:annotation><xs:documentation>SDP SenderAddress</xs:documentation></xs:annotation></xs:element><xs:element name="MessagePriority" type="xs:string"><xs:annotation><xs:documentation>DEFAULT,LOW,NORMAL,HIGH</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="Message" type="xs:string"/><xs:element name="Subject" type="xs:string"/><xs:element name="Charging" type="pims:DCCharging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCSendMmsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element minOccurs="0" name="MessageKey" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="PurchaseProductRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="PurchaseProductResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="ChargingKey" type="xs:string"/><xs:element minOccurs="0" name="OfferKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="DCPurchaseProductRequest"><xs:annotation><xs:documentation>Direct Charging Web Service API</xs:documentation></xs:annotation><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="Charging" type="pims:DCCharging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCPurchaseProductResponse"><xs:annotation><xs:documentation>Direct Charging Web Service API</xs:documentation></xs:annotation><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="ChargingKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="ReservePurchaseRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element ref="pims:Charging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="ReservePurchaseResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="ChargingKey" type="xs:string"/><xs:element minOccurs="0" name="OfferKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="DCReservePurchaseRequest"><xs:annotation><xs:documentation>Direct Charging Web Service API</xs:documentation></xs:annotation><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ReceiverAddress" type="common:Address"/><xs:element name="Charging" type="pims:DCCharging"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="DCReservePurchaseResponse"><xs:annotation><xs:documentation>Direct Charging Web Service API</xs:documentation></xs:annotation><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="ChargingKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="CheckCreditRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="Amount" type="xs:double"/><xs:element name="CustomerAddress" type="common:Address"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="CheckCreditResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="CreditCheckResult" type="xs:boolean"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="ReleasePurchaseRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ChargingKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="ReleasePurchaseResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="CommitPurchaseRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="SessionId" type="xs:string"><xs:annotation><xs:documentation>SDP Session_id</xs:documentation></xs:annotation></xs:element><xs:element name="ChargingKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="CommitPurchaseResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="CancelDeactivationRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="SubscriptionKey" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="CancelDeactivationResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element minOccurs="0" name="PartnerReference" type="xs:string"><xs:annotation><xs:documentation>Unique partner referans değeri. Partner sisteminde kullanılmak üzere</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="PartnerProcessResultRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="Success" type="xs:boolean"/><xs:element minOccurs="0" name="PartnerResult" type="xs:string"/><xs:element name="NotificationKey" type="xs:string"/><xs:element minOccurs="0" name="TokenId" type="xs:string"/><xs:element minOccurs="0" name="PartnerReference" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="PartnerProcessResultResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:element name="Charging"><xs:complexType><xs:sequence><xs:element name="ServiceKey" type="xs:string"/><xs:element minOccurs="0" name="ItemInfo" type="xs:string"/><xs:element minOccurs="0" name="ItemCategory" type="xs:string"/><xs:element minOccurs="0" name="ContentProvider" type="xs:string"/><xs:element name="AccessChannel" type="xs:string"/><xs:element name="ChargingAddress" type="common:Address"><xs:annotation><xs:documentation>Msisdn yada asid den bir tanesi dolu olma zorunda</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:complexType name="DCCharging"><xs:annotation><xs:documentation>Direct Charging Web Service API</xs:documentation></xs:annotation><xs:sequence><xs:element name="Amount" type="xs:double"/><xs:element minOccurs="0" name="ItemInfo" type="xs:string"/><xs:element minOccurs="0" name="ItemCategory" type="xs:string"/><xs:element minOccurs="0" name="ContentProvider" type="xs:string"/><xs:element name="AccessChannel" type="xs:string"/><xs:element name="ChargingAddress" type="common:Address"><xs:annotation><xs:documentation>Msisdn yada asid den bir tanesi dolu olma zorunda</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType><xs:element name="SubscriptionOffer"><xs:complexType><xs:sequence><xs:element minOccurs="0" name="Key" type="xs:string"/><xs:element name="SubscriberAddress" type="common:Address"/><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="CreateDate" type="xs:dateTime"/><xs:element minOccurs="0" name="StartDate" type="xs:dateTime"/><xs:element minOccurs="0" name="LastRenewalDate" type="xs:dateTime"/><xs:element minOccurs="0" name="RenewalCount" type="xs:int"/><xs:element minOccurs="0" name="Status" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetPartnersRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element minOccurs="0" name="PartnerStatus" type="common:PartnerStatus"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetPartnersResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="PartnerList" type="pims:Partner"/></xs:sequence></xs:complexType></xs:element><xs:complexType name="Partner"><xs:sequence><xs:element name="PartnerKey" type="xs:string"/><xs:element name="PartnerStatus" type="common:PartnerStatus"/><xs:element name="PartnerName" type="xs:string"/></xs:sequence></xs:complexType><xs:element name="RefundChargingRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element minOccurs="0" name="TransactionId" type="xs:string"/><xs:element minOccurs="0" name="ChargingKey" type="xs:string"/><xs:element name="RefundReason" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="RefundChargingResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="ChargingKeys" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetServiceAppsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element minOccurs="0" name="ServiceAppStatus" type="common:ServiceAppStatus"/><xs:element minOccurs="0" name="PartnerKey" type="xs:string"/><xs:element minOccurs="0" name="SapKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetServiceAppsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="ServiceAppList" type="pims:ServiceApp"/></xs:sequence></xs:complexType></xs:element><xs:complexType name="ServiceApp"><xs:sequence><xs:element name="SapKey" type="xs:string"/><xs:element name="Status" type="common:ServiceAppStatus"/><xs:element name="PartnerKey" type="xs:string"/><xs:element minOccurs="0" name="SmsShortNumber" type="xs:string"/><xs:element minOccurs="0" name="MmsShortNumber" type="xs:string"/><xs:element minOccurs="0" name="SmsHeaders" type="xs:string"/><xs:element minOccurs="0" name="MmsHeaders" type="xs:string"/></xs:sequence></xs:complexType><xs:element name="GetProductsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element minOccurs="0" name="ProductStatus" type="common:ProductStatus"/><xs:element minOccurs="0" name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="SapKey" type="xs:string"/><xs:element minOccurs="0" name="ShortNumber" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetProductsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="ProductList" type="pims:Product"/></xs:sequence></xs:complexType></xs:element><xs:complexType name="Product"><xs:sequence><xs:element name="ProductKey" type="xs:string"/><xs:element name="ProductName" type="xs:string"/><xs:element name="Status" type="common:ProductStatus"/><xs:element name="SapKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="ServiceList" type="pims:Service"/></xs:sequence></xs:complexType><xs:complexType name="Service"><xs:sequence><xs:element name="ServiceKey" type="xs:string"/><xs:element name="ServiceTypeKey" type="xs:string"/><xs:element name="Description" type="xs:string"/></xs:sequence></xs:complexType><xs:element name="GetOffersRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element minOccurs="0" name="OfferStatus" type="common:OfferStatus"/><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element minOccurs="0" name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="ShortNumber" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetOffersResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="OfferList" type="pims:Offer"/></xs:sequence></xs:complexType></xs:element><xs:complexType name="Offer"><xs:sequence><xs:element name="OfferKey" type="xs:string"/><xs:element name="ProductKey" type="xs:string"/><xs:element name="OfferName" type="xs:string"/><xs:element name="OfferDescription" type="xs:string"/><xs:element name="Status" type="common:OfferStatus"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionPriceList" type="pims:SubscriptionPrice"/><xs:element maxOccurs="unbounded" minOccurs="0" name="UsagePriceList" type="pims:UsagePrice"/></xs:sequence></xs:complexType><xs:complexType name="SubscriptionPrice"><xs:sequence><xs:element name="PlanKey" type="xs:string"/><xs:element name="Price" type="xs:double"/><xs:element name="SortOrder" type="xs:int"/><xs:element name="RenewalPeriod" type="xs:int"/><xs:element name="RenewalPeriodUnit" type="common:TimeUnit"/><xs:element name="AutoRenew" type="xs:boolean"/></xs:sequence></xs:complexType><xs:complexType name="UsagePrice"><xs:sequence><xs:element name="PlanKey" type="xs:string"/><xs:element name="Price" type="xs:double"/><xs:element name="AutoRenew" type="xs:boolean"/><xs:element name="ServiceKey" type="xs:string"/><xs:element name="ServiceDescription" type="xs:string"/></xs:sequence></xs:complexType><xs:element name="GetSubscriptionsRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element name="Msisdn" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="OfferKey" type="xs:string"/><xs:element name="FirstResult" type="xs:long"/><xs:element name="MaxResults" type="xs:long"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="GetSubscriptionsResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TotalResults" type="xs:long"/><xs:element maxOccurs="unbounded" minOccurs="0" ref="pims:SubscriptionList"/></xs:sequence></xs:complexType></xs:element><xs:element name="SubscriptionList"><xs:complexType><xs:sequence><xs:element minOccurs="0" name="Key" type="xs:string"/><xs:element name="OfferKey" type="xs:string"/><xs:element name="OfferName" type="xs:string"/><xs:element minOccurs="0" name="LastRenewalDate" type="xs:dateTime"/><xs:element name="Status" type="xs:string"/><xs:element name="PriceAmount" type="xs:double"/><xs:element name="PriceUnit" type="xs:string"/><xs:element name="PeriodAmount" type="xs:int"/><xs:element name="PeriodUnit" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="SendMOSMSRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="AscId" type="xs:string"/><xs:element name="SourceNumber" type="xs:string"/><xs:element name="DestinationNumber" type="xs:string"/><xs:element minOccurs="0" name="SmsText" type="xs:string"/><xs:element name="PartNo" type="xs:int"/><xs:element name="TotalPart" type="xs:int"/><xs:element name="RefNo" type="xs:int"/><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="SendMOSMSResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element name="ResultDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="ASStopSubscriptionRequest"><xs:complexType><xs:sequence><xs:element name="PimsApiUserInformation" type="pims:PimsApiUserInformation"/><xs:element name="SubscriptionKey" type="xs:string"/><xs:element name="AscId" type="xs:string"/><xs:element name="Msisdn" type="xs:string"/><xs:element name="ImmediateServiceStop" type="xs:boolean"><xs:annotation><xs:documentation>Hemen abonelik bitirilsin mi yoksa donem sonuna kadar beklensin mi</xs:documentation></xs:annotation></xs:element><xs:element maxOccurs="unbounded" minOccurs="0" name="NamedParam" type="common:NamedParam"/></xs:sequence></xs:complexType></xs:element><xs:element name="ASStopSubscriptionResponse"><xs:complexType><xs:sequence><xs:element name="ResultCode" type="xs:string"/><xs:element minOccurs="0" name="ResultCodeDescription" type="xs:string"/><xs:element name="TransactionKey" type="xs:string"><xs:annotation><xs:documentation>İşlem no</xs:documentation></xs:annotation></xs:element></xs:sequence></xs:complexType></xs:element><xs:complexType name="PimsApiUserInformation"><xs:sequence><xs:element name="PimsApiUsername" type="xs:string"/><xs:element name="PimsApiPassword" type="xs:string"/></xs:sequence></xs:complexType><xs:complexType name="Subscribers"><xs:sequence><xs:element name="ProductKey" type="xs:string"/><xs:element minOccurs="0" name="OfferKey" type="xs:string"/><xs:element maxOccurs="unbounded" minOccurs="0" name="SubscriptionOfferProfile" type="common:SubscriptionOfferProfile"/></xs:sequence></xs:complexType><xs:complexType name="MapProfile"><xs:sequence><xs:element maxOccurs="unbounded" name="Property" type="pims:MapProfileProperty"/></xs:sequence></xs:complexType><xs:complexType name="MapProfileProperty"><xs:sequence><xs:element name="Name" type="xs:string"/><xs:element maxOccurs="unbounded" name="Item" type="xs:string"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSmsResponse">
+    <wsdl:part element="tns:SendSmsResponse" name="SendSmsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCReservePurchaseResponse">
+    <wsdl:part element="tns:DCReservePurchaseResponse" name="DCReservePurchaseResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ResumeAllSubscriptionsResponse">
+    <wsdl:part element="tns:ResumeAllSubscriptionsResponse" name="ResumeAllSubscriptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSubscriptionsRequest">
+    <wsdl:part element="tns:GetSubscriptionsRequest" name="GetSubscriptionsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreateSubscriptionResponse">
+    <wsdl:part element="tns:CreateSubscriptionResponse" name="CreateSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CancelDeactivationRequest">
+    <wsdl:part element="tns:CancelDeactivationRequest" name="CancelDeactivationRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RefundChargingRequest">
+    <wsdl:part element="tns:RefundChargingRequest" name="RefundChargingRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="StopAllSubscriptionsRequest">
+    <wsdl:part element="tns:StopAllSubscriptionsRequest" name="StopAllSubscriptionsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCReservePurchaseRequest">
+    <wsdl:part element="tns:DCReservePurchaseRequest" name="DCReservePurchaseRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetServiceAppsRequest">
+    <wsdl:part element="tns:GetServiceAppsRequest" name="GetServiceAppsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SuspendSubscriptionResponse">
+    <wsdl:part element="tns:SuspendSubscriptionResponse" name="SuspendSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendMmsResponse">
+    <wsdl:part element="tns:DCSendMmsResponse" name="DCSendMmsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckCreditRequest">
+    <wsdl:part element="tns:CheckCreditRequest" name="CheckCreditRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendBulkSmsResponse">
+    <wsdl:part element="tns:SendBulkSmsResponse" name="SendBulkSmsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ASStopSubscriptionRequest">
+    <wsdl:part element="tns:ASStopSubscriptionRequest" name="ASStopSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendSmsRequest">
+    <wsdl:part element="tns:DCSendSmsRequest" name="DCSendSmsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QueryAllSubscriptionsRequest">
+    <wsdl:part element="tns:QueryAllSubscriptionsRequest" name="QueryAllSubscriptionsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PartnerProcessResultResponse">
+    <wsdl:part element="tns:PartnerProcessResultResponse" name="PartnerProcessResultResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckCreditResponse">
+    <wsdl:part element="tns:CheckCreditResponse" name="CheckCreditResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCPurchaseProductResponse">
+    <wsdl:part element="tns:DCPurchaseProductResponse" name="DCPurchaseProductResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CancelDeactivationResponse">
+    <wsdl:part element="tns:CancelDeactivationResponse" name="CancelDeactivationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PurchaseProductRequest">
+    <wsdl:part element="tns:PurchaseProductRequest" name="PurchaseProductRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MigrateSubscriptionRequest">
+    <wsdl:part element="tns:MigrateSubscriptionRequest" name="MigrateSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendMmsResponse">
+    <wsdl:part element="tns:SendMmsResponse" name="SendMmsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendSmsRequest">
+    <wsdl:part element="tns:SendSmsRequest" name="SendSmsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PurchaseProductResponse">
+    <wsdl:part element="tns:PurchaseProductResponse" name="PurchaseProductResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MapIvtResponse">
+    <wsdl:part element="tns:MapIvtResponse" name="MapIvtResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPartnersResponse">
+    <wsdl:part element="tns:GetPartnersResponse" name="GetPartnersResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MapIvtRequest">
+    <wsdl:part element="tns:MapIvtRequest" name="MapIvtRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendMOSMSResponse">
+    <wsdl:part element="tns:SendMOSMSResponse" name="SendMOSMSResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetProductsRequest">
+    <wsdl:part element="tns:GetProductsRequest" name="GetProductsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MigrateSubscriptionResponse">
+    <wsdl:part element="tns:MigrateSubscriptionResponse" name="MigrateSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ASStopSubscriptionResponse">
+    <wsdl:part element="tns:ASStopSubscriptionResponse" name="ASStopSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendSmsResponse">
+    <wsdl:part element="tns:DCSendSmsResponse" name="DCSendSmsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendWapPushResponse">
+    <wsdl:part element="tns:DCSendWapPushResponse" name="DCSendWapPushResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PartnerProcessResultRequest">
+    <wsdl:part element="tns:PartnerProcessResultRequest" name="PartnerProcessResultRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ResumeAllSubscriptionsRequest">
+    <wsdl:part element="tns:ResumeAllSubscriptionsRequest" name="ResumeAllSubscriptionsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ReleasePurchaseRequest">
+    <wsdl:part element="tns:ReleasePurchaseRequest" name="ReleasePurchaseRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ResumeSubscriptionResponse">
+    <wsdl:part element="tns:ResumeSubscriptionResponse" name="ResumeSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="StopSubscriptionRequest">
+    <wsdl:part element="tns:StopSubscriptionRequest" name="StopSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RefundChargingResponse">
+    <wsdl:part element="tns:RefundChargingResponse" name="RefundChargingResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ReleasePurchaseResponse">
+    <wsdl:part element="tns:ReleasePurchaseResponse" name="ReleasePurchaseResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetProductsResponse">
+    <wsdl:part element="tns:GetProductsResponse" name="GetProductsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendWapPushRequest">
+    <wsdl:part element="tns:SendWapPushRequest" name="SendWapPushRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendWapPushResponse">
+    <wsdl:part element="tns:SendWapPushResponse" name="SendWapPushResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ReservePurchaseRequest">
+    <wsdl:part element="tns:ReservePurchaseRequest" name="ReservePurchaseRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendMmsRequest">
+    <wsdl:part element="tns:SendMmsRequest" name="SendMmsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QuerySubscriptionResponse">
+    <wsdl:part element="tns:QuerySubscriptionResponse" name="QuerySubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSubscriptionRequest">
+    <wsdl:part element="tns:UpdateSubscriptionRequest" name="UpdateSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPartnersRequest">
+    <wsdl:part element="tns:GetPartnersRequest" name="GetPartnersRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="StopSubscriptionResponse">
+    <wsdl:part element="tns:StopSubscriptionResponse" name="StopSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendMOSMSRequest">
+    <wsdl:part element="tns:SendMOSMSRequest" name="SendMOSMSRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSubscriptionResponse">
+    <wsdl:part element="tns:UpdateSubscriptionResponse" name="UpdateSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="StopAllSubscriptionsResponse">
+    <wsdl:part element="tns:StopAllSubscriptionsResponse" name="StopAllSubscriptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QuerySubscriptionRequest">
+    <wsdl:part element="tns:QuerySubscriptionRequest" name="QuerySubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SuspendAllSubscriptionsRequest">
+    <wsdl:part element="tns:SuspendAllSubscriptionsRequest" name="SuspendAllSubscriptionsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QueryAllSubscriptionsResponse">
+    <wsdl:part element="tns:QueryAllSubscriptionsResponse" name="QueryAllSubscriptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendBulkSmsRequest">
+    <wsdl:part element="tns:SendBulkSmsRequest" name="SendBulkSmsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpgradeSubscriptionResponse">
+    <wsdl:part element="tns:UpgradeSubscriptionResponse" name="UpgradeSubscriptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOffersRequest">
+    <wsdl:part element="tns:GetOffersRequest" name="GetOffersRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ReservePurchaseResponse">
+    <wsdl:part element="tns:ReservePurchaseResponse" name="ReservePurchaseResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSubscriptionsResponse">
+    <wsdl:part element="tns:GetSubscriptionsResponse" name="GetSubscriptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendMmsRequest">
+    <wsdl:part element="tns:DCSendMmsRequest" name="DCSendMmsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCSendWapPushRequest">
+    <wsdl:part element="tns:DCSendWapPushRequest" name="DCSendWapPushRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CommitPurchaseResponse">
+    <wsdl:part element="tns:CommitPurchaseResponse" name="CommitPurchaseResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpgradeSubscriptionRequest">
+    <wsdl:part element="tns:UpgradeSubscriptionRequest" name="UpgradeSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SuspendSubscriptionRequest">
+    <wsdl:part element="tns:SuspendSubscriptionRequest" name="SuspendSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ResumeSubscriptionRequest">
+    <wsdl:part element="tns:ResumeSubscriptionRequest" name="ResumeSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetServiceAppsResponse">
+    <wsdl:part element="tns:GetServiceAppsResponse" name="GetServiceAppsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOffersResponse">
+    <wsdl:part element="tns:GetOffersResponse" name="GetOffersResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreateSubscriptionRequest">
+    <wsdl:part element="tns:CreateSubscriptionRequest" name="CreateSubscriptionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SuspendAllSubscriptionsResponse">
+    <wsdl:part element="tns:SuspendAllSubscriptionsResponse" name="SuspendAllSubscriptionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DCPurchaseProductRequest">
+    <wsdl:part element="tns:DCPurchaseProductRequest" name="DCPurchaseProductRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CommitPurchaseRequest">
+    <wsdl:part element="tns:CommitPurchaseRequest" name="CommitPurchaseRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Pims">
+    <wsdl:operation name="SendSms">
+      <wsdl:input message="tns:SendSmsRequest" name="SendSmsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SendSmsResponse" name="SendSmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCReservePurchase">
+      <wsdl:input message="tns:DCReservePurchaseRequest" name="DCReservePurchaseRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DCReservePurchaseResponse" name="DCReservePurchaseResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResumeAllSubscriptions">
+      <wsdl:input message="tns:ResumeAllSubscriptionsRequest" name="ResumeAllSubscriptionsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ResumeAllSubscriptionsResponse" name="ResumeAllSubscriptionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptions">
+      <wsdl:input message="tns:GetSubscriptionsRequest" name="GetSubscriptionsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSubscriptionsResponse" name="GetSubscriptionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSubscription">
+      <wsdl:input message="tns:CreateSubscriptionRequest" name="CreateSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:CreateSubscriptionResponse" name="CreateSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelDeactivation">
+      <wsdl:input message="tns:CancelDeactivationRequest" name="CancelDeactivationRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:CancelDeactivationResponse" name="CancelDeactivationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefundCharging">
+      <wsdl:input message="tns:RefundChargingRequest" name="RefundChargingRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RefundChargingResponse" name="RefundChargingResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopAllSubscriptions">
+      <wsdl:input message="tns:StopAllSubscriptionsRequest" name="StopAllSubscriptionsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:StopAllSubscriptionsResponse" name="StopAllSubscriptionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceApps">
+      <wsdl:input message="tns:GetServiceAppsRequest" name="GetServiceAppsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetServiceAppsResponse" name="GetServiceAppsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuspendSubscription">
+      <wsdl:input message="tns:SuspendSubscriptionRequest" name="SuspendSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SuspendSubscriptionResponse" name="SuspendSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendMms">
+      <wsdl:input message="tns:DCSendMmsRequest" name="DCSendMmsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DCSendMmsResponse" name="DCSendMmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <wsdl:input message="tns:CheckCreditRequest" name="CheckCreditRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:CheckCreditResponse" name="CheckCreditResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSms">
+      <wsdl:input message="tns:SendBulkSmsRequest" name="SendBulkSmsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SendBulkSmsResponse" name="SendBulkSmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ASStopSubscription">
+      <wsdl:input message="tns:ASStopSubscriptionRequest" name="ASStopSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ASStopSubscriptionResponse" name="ASStopSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendSms">
+      <wsdl:input message="tns:DCSendSmsRequest" name="DCSendSmsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DCSendSmsResponse" name="DCSendSmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryAllSubscriptions">
+      <wsdl:input message="tns:QueryAllSubscriptionsRequest" name="QueryAllSubscriptionsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:QueryAllSubscriptionsResponse" name="QueryAllSubscriptionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PartnerProcessResult">
+      <wsdl:input message="tns:PartnerProcessResultRequest" name="PartnerProcessResultRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PartnerProcessResultResponse" name="PartnerProcessResultResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCPurchaseProduct">
+      <wsdl:input message="tns:DCPurchaseProductRequest" name="DCPurchaseProductRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DCPurchaseProductResponse" name="DCPurchaseProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseProduct">
+      <wsdl:input message="tns:PurchaseProductRequest" name="PurchaseProductRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PurchaseProductResponse" name="PurchaseProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MigrateSubscription">
+      <wsdl:input message="tns:MigrateSubscriptionRequest" name="MigrateSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:MigrateSubscriptionResponse" name="MigrateSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMms">
+      <wsdl:input message="tns:SendMmsRequest" name="SendMmsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SendMmsResponse" name="SendMmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MapIvt">
+      <wsdl:input message="tns:MapIvtRequest" name="MapIvtRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:MapIvtResponse" name="MapIvtResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartners">
+      <wsdl:input message="tns:GetPartnersRequest" name="GetPartnersRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetPartnersResponse" name="GetPartnersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMOSMS">
+      <wsdl:input message="tns:SendMOSMSRequest" name="SendMOSMSRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SendMOSMSResponse" name="SendMOSMSResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProducts">
+      <wsdl:input message="tns:GetProductsRequest" name="GetProductsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetProductsResponse" name="GetProductsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendWapPush">
+      <wsdl:input message="tns:DCSendWapPushRequest" name="DCSendWapPushRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DCSendWapPushResponse" name="DCSendWapPushResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleasePurchase">
+      <wsdl:input message="tns:ReleasePurchaseRequest" name="ReleasePurchaseRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ReleasePurchaseResponse" name="ReleasePurchaseResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResumeSubscription">
+      <wsdl:input message="tns:ResumeSubscriptionRequest" name="ResumeSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ResumeSubscriptionResponse" name="ResumeSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopSubscription">
+      <wsdl:input message="tns:StopSubscriptionRequest" name="StopSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:StopSubscriptionResponse" name="StopSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendWapPush">
+      <wsdl:input message="tns:SendWapPushRequest" name="SendWapPushRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SendWapPushResponse" name="SendWapPushResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReservePurchase">
+      <wsdl:input message="tns:ReservePurchaseRequest" name="ReservePurchaseRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ReservePurchaseResponse" name="ReservePurchaseResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscription">
+      <wsdl:input message="tns:QuerySubscriptionRequest" name="QuerySubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:QuerySubscriptionResponse" name="QuerySubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubscription">
+      <wsdl:input message="tns:UpdateSubscriptionRequest" name="UpdateSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateSubscriptionResponse" name="UpdateSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuspendAllSubscriptions">
+      <wsdl:input message="tns:SuspendAllSubscriptionsRequest" name="SuspendAllSubscriptionsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SuspendAllSubscriptionsResponse" name="SuspendAllSubscriptionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSubscription">
+      <wsdl:input message="tns:UpgradeSubscriptionRequest" name="UpgradeSubscriptionRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpgradeSubscriptionResponse" name="UpgradeSubscriptionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOffers">
+      <wsdl:input message="tns:GetOffersRequest" name="GetOffersRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetOffersResponse" name="GetOffersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommitPurchase">
+      <wsdl:input message="tns:CommitPurchaseRequest" name="CommitPurchaseRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:CommitPurchaseResponse" name="CommitPurchaseResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PimsSoap11" type="tns:Pims">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SendSms">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SendSmsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SendSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCReservePurchase">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DCReservePurchaseRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DCReservePurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResumeAllSubscriptions">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="ResumeAllSubscriptionsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ResumeAllSubscriptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptions">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetSubscriptionsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSubscriptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CreateSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CreateSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelDeactivation">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CancelDeactivationRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CancelDeactivationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefundCharging">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="RefundChargingRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="RefundChargingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopAllSubscriptions">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="StopAllSubscriptionsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="StopAllSubscriptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceApps">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetServiceAppsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetServiceAppsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuspendSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SuspendSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SuspendSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendMms">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DCSendMmsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DCSendMmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CheckCreditRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CheckCreditResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSms">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SendBulkSmsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SendBulkSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ASStopSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="ASStopSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ASStopSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendSms">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DCSendSmsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DCSendSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryAllSubscriptions">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="QueryAllSubscriptionsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="QueryAllSubscriptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PartnerProcessResult">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="PartnerProcessResultRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="PartnerProcessResultResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCPurchaseProduct">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DCPurchaseProductRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DCPurchaseProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseProduct">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="PurchaseProductRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="PurchaseProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MigrateSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="MigrateSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MigrateSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMms">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SendMmsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SendMmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MapIvt">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="MapIvtRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MapIvtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartners">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetPartnersRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetPartnersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMOSMS">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SendMOSMSRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SendMOSMSResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProducts">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetProductsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetProductsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DCSendWapPush">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DCSendWapPushRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DCSendWapPushResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleasePurchase">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="ReleasePurchaseRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ReleasePurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResumeSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="ResumeSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ResumeSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="StopSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="StopSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendWapPush">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SendWapPushRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SendWapPushResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReservePurchase">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="ReservePurchaseRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ReservePurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="QuerySubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="QuerySubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="UpdateSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="UpdateSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuspendAllSubscriptions">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="SuspendAllSubscriptionsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SuspendAllSubscriptionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSubscription">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="UpgradeSubscriptionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="UpgradeSubscriptionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOffers">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetOffersRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetOffersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommitPurchase">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CommitPurchaseRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CommitPurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PimsService">
+    <wsdl:port binding="tns:PimsSoap11" name="PimsSoap11">
+      <soap:address location="https://pims.turktelekom.com.tr/ws/services"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
