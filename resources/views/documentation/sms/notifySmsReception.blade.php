@@ -10,7 +10,7 @@
                 </section><!--//docs-intro-->
             </header>
             <div>
-                <code>POST: {{$request_url}}/NotifySmsReception</code>
+                <code>POST: {{$request_url}}/sms</code>
                 <h6>
                     Request Body:
                 </h6>
@@ -31,6 +31,7 @@
 </div>
 <script>
     const data = {
+            "RequestType" : "NotifySmsReceptionRequest",
             "SessionId": "string",
             "MessageKey":"string",
             "DeliveryInformation":{

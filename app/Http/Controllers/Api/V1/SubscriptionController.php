@@ -9,6 +9,79 @@ use Illuminate\Support\Facades\Log;
 
 class SubscriptionController extends Controller
 {
+    const SUBSCRIPTION_CREATED = 'SubscriptionCreatedRequest';
+    const SUBSCRIPTION_DEACTIVATED = 'SubscriptionDeactivatedRequest';
+    const SUBSCRIPTION_RENEW_FAILED = 'SubscriptionRenewFailedRequest';
+    const SUBSCRIPTION_RENEWED = 'SubscriptionRenewedRequest';
+    const SUBSCRIPTION_RESUMED = 'SubscriptionResumedRequest';
+    const SUBSCRIPTION_SUSPENDED = 'SubscriptionSuspendedRequest';
+    const SUBSCRIPTION_TO_BE_DEACTIVATED = 'SubscriptionToBeDeactivatedRequest';
+    const SUBSCRIPTION_TO_BE_RENEWED = 'SubscriptionToBeRenewedRequest';
+    const SUBSCRIPTION_TRIAL_TO_BE_ENDED = 'SubscriptionTrialToBeEndedRequest';
+
+
+    public function subcriptionRequest(Request $request)
+    {
+        try {
+            // Get the subscription request type from the request
+            $subscriptionType = $request->input('RequestType');
+
+            if ($subscriptionType) {
+                switch ($subscriptionType) {
+                    // Handle the Subscription Created request
+                    case self::SUBSCRIPTION_CREATED:
+                        return $this->SubscriptionCreated($request);
+
+                    // Handle the Subscription Deactivated request
+                    case self::SUBSCRIPTION_DEACTIVATED:
+                        return $this->SubscriptionDeactivated($request);
+
+                    // Handle the Subscription Renewal Failed request
+                    case self::SUBSCRIPTION_RENEW_FAILED:
+                        return $this->SubscriptionRenewFailed($request);
+
+                    // Handle the Subscription Renewed request
+                    case self::SUBSCRIPTION_RENEWED:
+                        return $this->SubscriptionRenewed($request);
+
+                    // Handle the Subscription Resumed request
+                    case self::SUBSCRIPTION_RESUMED:
+                        return $this->SubscriptionResumed($request);
+
+                    // Handle the Subscription Suspended request
+                    case self::SUBSCRIPTION_SUSPENDED:
+                        return $this->SubscriptionSuspended($request);
+
+                    // Handle the Subscription To Be Deactivated request
+                    case self::SUBSCRIPTION_TO_BE_DEACTIVATED:
+                        return $this->SubscriptionToBeDeactivated($request);
+
+                    // Handle the Subscription To Be Renewed request
+                    case self::SUBSCRIPTION_TO_BE_RENEWED:
+                        return $this->SubscriptionToBeRenewed($request);
+
+                    // Handle the Subscription Trial To Be Ended request
+                    case self::SUBSCRIPTION_TRIAL_TO_BE_ENDED:
+                        return $this->SubscriptionTrialToBeEnded($request);
+
+                    // Handle unsupported request types
+                    default:
+                        return response()->json([
+                            'error' => 'Unsupported subscription request type'
+                        ], 400);
+                }
+            }
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Subscription request error: ' . $e->getMessage());
+
+            // Return an error response for exceptional cases
+            return response()->json([
+                'error' => 'An error occurred while processing the subscription request'
+            ], 500);
+        }
+    }
+
     public function SubscriptionCreated(Request $request){
 
         $simpref = "SubscriptionCreated";

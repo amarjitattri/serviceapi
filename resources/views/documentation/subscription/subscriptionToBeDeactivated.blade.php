@@ -10,7 +10,7 @@
                 </section><!--//docs-intro-->
             </header>
             <div>
-                <code>POST: {{$request_url}}/SubscriptionToBeDeactivated</code>
+                <code>POST: {{$request_url}}/subscription</code>
                 <h6>
                     Request Body:
                 </h6>
@@ -32,6 +32,7 @@
 <script>
     const data =
     {
+        "RequestType": "SubscriptionToBeDeactivatedRequest",
         "NotificationKey ": "string",
         "Subscription":{
             "Key" : "string",

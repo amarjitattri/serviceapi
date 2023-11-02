@@ -10,7 +10,7 @@
                 </section><!--//docs-intro-->
             </header>
             <div>
-                <code>POST: {{$request_url}}/SubscriptionSuspended</code>
+                <code>POST: {{$request_url}}/subscription</code>
                 <h6>
                     Request Body:
                 </h6>
@@ -38,6 +38,7 @@
 <script>
     const data =
     {
+        "RequestType": "SubscriptionSuspendedRequest",
         "NotificationKey ": "string",
         "Subscription":{
             "Key" : "string",

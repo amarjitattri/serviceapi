@@ -10,7 +10,7 @@
                 </section><!--//docs-intro-->
             </header>
             <div>
-                <code>POST: {{$request_url}}/SubscriptionRenewed</code>
+                <code>POST: {{$request_url}}/subscription</code>
                 <h6>
                     Request Body:
                 </h6>
@@ -33,6 +33,7 @@
     const data =
 
         {
+            "RequestType": "SubscriptionRenewedRequest",
             "NotificationKey ": "string",
             "Subscription":{
                 "Key" : "string",

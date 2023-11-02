@@ -10,7 +10,7 @@
                 </section><!--//docs-intro-->
             </header>
             <div>
-                <code>POST: {{$request_url}}/SubscriptionDeactivated</code>
+                <code>POST: {{$request_url}}/subscription</code>
                 <h6>
                     Request Body:
                 </h6>
@@ -30,121 +30,121 @@
     </div>
 </div>
 <script>
-    const data =
-        {
-                "NotificationKey ": "string",
-                "Subscription":{
-                    "Key" : "string",
-                    "OfferKey" : "string",
-                    "ProductKey" : "string",
-                    "CreateDate" : "dateTime",
-                    "StartDate" : "dateTime",
-                    "LastRenewalDate" : "dateTime",
-                    "Status" : "ACTIVE",
-                    "SubscriptionProfile" :{
-                        "ServiceProfileAttributeKey" : "string",
-                        "AttrValue" : "string"
-                    },
-                    "SubscriptionProfile2" :{
-                        "ServiceProfileAttributeKey" : "string",
-                        "AttrValue" : "string"
-                    },
-                    "OnetimePricingPlans" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                    "ChargingStatus":"INIT"
-                    },
-                    "OnetimePricingPlans2" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                    "ChargingStatus":"INIT"
-                    },
-                    "RecurringPricingPlans" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                        "CurrentInterval":"integer",
-                        "AutoRenew":"integer",
-                        "CreateDate":"integer",
-                        "StartDate":"integer",
-                        "LastRenewalDate":"integer",
-                        "NextRenewalDate":"integer",
-                        "UnpaidPeriodEndDate":"integer",
-                        "ReminderDate":"integer",
-                        "PeriodBalanceInMillis":"integer"
-                    },
-                    "RecurringPricingPlans2" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                        "CurrentInterval":"integer",
-                        "AutoRenew":"integer",
-                        "CreateDate":"integer",
-                        "StartDate":"integer",
-                        "LastRenewalDate":"integer",
-                        "NextRenewalDate":"integer",
-                        "UnpaidPeriodEndDate":"integer",
-                        "ReminderDate":"integer",
-                        "PeriodBalanceInMillis":"integer"
-                    },
-                    "UsagePricingPlans" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                        "ServiceKey":"integer",
-                        "ChargingModel":"FLAT ",
-                        "StartDate":"integer",
-                        "LastRenewalDate":"integer",
-                        "NextRenewalDate":"integer",
-                        "UnpaidPeriodEndDate":"integer"
-                    },
-                    "UsagePricingPlan2s" :{
-                        "AbstractSubscriptionPricingPlan" : {
-                            "Key" : "string",
-                            "SubscriptionKey" : "string",
-                            "PricingPlanKey" : "string",
-                            "CreateDate" : "dateTime"
-                        },
-                        "ServiceKey":"integer",
-                        "ChargingModel":"FLAT ",
-                        "StartDate":"integer",
-                        "LastRenewalDate":"integer",
-                        "NextRenewalDate":"integer",
-                        "UnpaidPeriodEndDate":"integer"
-                    }
+    const data = {
+            "RequestType": "SubscriptionDeactivatedRequest",
+            "NotificationKey ": "string",
+            "Subscription":{
+                "Key" : "string",
+                "OfferKey" : "string",
+                "ProductKey" : "string",
+                "CreateDate" : "dateTime",
+                "StartDate" : "dateTime",
+                "LastRenewalDate" : "dateTime",
+                "Status" : "ACTIVE",
+                "SubscriptionProfile" :{
+                    "ServiceProfileAttributeKey" : "string",
+                    "AttrValue" : "string"
                 },
-                "Address ":{
-                    "Msisdn":"string",
-                    "Asid":"string"
+                "SubscriptionProfile2" :{
+                    "ServiceProfileAttributeKey" : "string",
+                    "AttrValue" : "string"
                 },
-                "TxKey":"string",
-                "PartnerReference":"string",
-                "ReasonCode":"string",
-                "NamedParam ":{
-                    "Key":"string",
-                    "Value":"string"
+                "OnetimePricingPlans" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                "ChargingStatus":"INIT"
                 },
-                "NamedParam2":{
-                    "Key":"string",
-                    "Value":"string"
+                "OnetimePricingPlans2" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                "ChargingStatus":"INIT"
+                },
+                "RecurringPricingPlans" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                    "CurrentInterval":"integer",
+                    "AutoRenew":"integer",
+                    "CreateDate":"integer",
+                    "StartDate":"integer",
+                    "LastRenewalDate":"integer",
+                    "NextRenewalDate":"integer",
+                    "UnpaidPeriodEndDate":"integer",
+                    "ReminderDate":"integer",
+                    "PeriodBalanceInMillis":"integer"
+                },
+                "RecurringPricingPlans2" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                    "CurrentInterval":"integer",
+                    "AutoRenew":"integer",
+                    "CreateDate":"integer",
+                    "StartDate":"integer",
+                    "LastRenewalDate":"integer",
+                    "NextRenewalDate":"integer",
+                    "UnpaidPeriodEndDate":"integer",
+                    "ReminderDate":"integer",
+                    "PeriodBalanceInMillis":"integer"
+                },
+                "UsagePricingPlans" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                    "ServiceKey":"integer",
+                    "ChargingModel":"FLAT ",
+                    "StartDate":"integer",
+                    "LastRenewalDate":"integer",
+                    "NextRenewalDate":"integer",
+                    "UnpaidPeriodEndDate":"integer"
+                },
+                "UsagePricingPlan2s" :{
+                    "AbstractSubscriptionPricingPlan" : {
+                        "Key" : "string",
+                        "SubscriptionKey" : "string",
+                        "PricingPlanKey" : "string",
+                        "CreateDate" : "dateTime"
+                    },
+                    "ServiceKey":"integer",
+                    "ChargingModel":"FLAT ",
+                    "StartDate":"integer",
+                    "LastRenewalDate":"integer",
+                    "NextRenewalDate":"integer",
+                    "UnpaidPeriodEndDate":"integer"
                 }
+            },
+            "Address ":{
+                "Msisdn":"string",
+                "Asid":"string"
+            },
+            "TxKey":"string",
+            "PartnerReference":"string",
+            "ReasonCode":"string",
+            "NamedParam ":{
+                "Key":"string",
+                "Value":"string"
+            },
+            "NamedParam2":{
+                "Key":"string",
+                "Value":"string"
+            }
         };
         const response = {
             "ServiceResult ": {
